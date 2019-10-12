@@ -1,5 +1,6 @@
 #TODO: Adjust search pattern for getName to exclude titles (Dr., Mr., etc...)
 #TODO: Try regex patterns with something other than lazy quantifier (YOU LAZY @#&$!)
+#TODO: Send output to file, not just console
 
 import re
 import requests
