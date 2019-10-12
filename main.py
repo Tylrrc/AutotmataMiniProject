@@ -1,49 +1,78 @@
 #TODO: Adjust search pattern for getName to exclude titles (Dr., Mr., etc...)
-#TODO: Implement ability to search by netID(will need to pull from web) AND html file
-#TODO: Try regex patterns with something other than lazy quantifier
+#TODO: Try regex patterns with something other than lazy quantifier (YOU LAZY @#&$!)
 
-import sys
 import re
+import requests
 
 if __name__ == '__main__':
-    #print("\nPlease enter a URL or filename: \n")
 
-    #input = sys.argv[1]
+    print("\n****** CS Faculty Lookup ******\n")
 
-    file = open("Department of Computer Science - Dr. Byron Gao.html",'r')
-    fileText = file.read()
+    print("Enter either a: \n")
+    print("\t- netID, or\n")
+    print("\t- a path to a *.html file downloaded from http://www.cs.txstate.edu/Personnel/Faculty\n")
+
+    input = input('---> ')
+    isHTMLFile = True
+
+    if (re.search('.html$', input)):
+        file = open(input,'r')
+        fileText = file.read()
+    else:
+        url = 'http://www.cs.txstate.edu/Personnel/' + input
+        fileText = requests.get(url).text
+        isHTMLFile = False
 
     searchableString = re.sub(r"\s+", " ", fileText)
 
-    # *******      Computer Science - (.*?)</title>
-    # will return name!
     getName = re.search('Computer Science - (.*?)</title>',searchableString)
-    name = getName.group(1)
+    try:
+        name = getName.group(1)
+    except AttributeError:
+        name = "Not Found"
     print("\nName: \t\t\t" + name)
     print()
 
     getEdu = re.search('Education</h3> </div> <div class="panel-body"><p>(.*?)</p>',searchableString)
-    edu = getEdu.group(1)
+
+    try:
+        edu = getEdu.group(1)
+    except AttributeError:
+        edu = "Not Found"
+
     print("Education: \t\t" + edu)
     print()
 
     getRsch = re.search('Research Interests</h3> </div> <div class="panel-body"><p>(.*?)</p>',searchableString)
-    rsch = getRsch.group(1)
+
+    try:
+        rsch = getRsch.group(1)
+    except AttributeError:
+        rsch = "Not Found"
+
     print("Research Interests: \t" + rsch)
     print()
 
     getUID = re.search('profiles/(.*?)/\">Login',searchableString)
-    UID = getUID.group(1)
+
+    try:
+        UID = getUID.group(1)
+    except AttributeError:
+        UID = "Not Found"
     print("Email: \t\t\t" + UID + "@txstate.edu")
     print()
 
     getWebpage = re.search('</h2> <h3><a target=\"_blank\" href=\"(.*?)\">Homepage', searchableString)
-    webpage = getWebpage.group(1)
+
+    try:
+        webpage = getWebpage.group(1)
+    except AttributeError:
+        webpage = "Not Found"
     print("Webpage: \t\t" + webpage)
     print()
 
-
-    file.close()
+    if isHTMLFile:
+        file.close()
 
 
 
