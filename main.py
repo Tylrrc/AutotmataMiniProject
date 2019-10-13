@@ -1,6 +1,5 @@
 #TODO: Adjust search pattern for getName to exclude titles (Dr., Mr., etc...)
 #TODO: Try regex patterns with something other than lazy quantifier (YOU LAZY @#&$!)
-#TODO: Send output to file, not just console
 
 import re
 import requests
@@ -9,16 +8,17 @@ if __name__ == '__main__':
 
     print("\n****** CS Faculty Lookup ******\n")
 
-    print("Enter either a: \n")
-    print("\t- netID, or\n")
+    print("Enter either: \n")
+    print("\t- a CS Faculty netID, or\n")
     print("\t- a path to a *.html file downloaded from http://www.cs.txstate.edu/Personnel/Faculty\n")
 
     input = input('---> ')
-    isHTMLFile = True
+
 
     if (re.search('.html$', input)):
-        file = open(input,'r')
-        fileText = file.read()
+        infile = open(input,'r')
+        fileText = infile.read()
+        isHTMLFile = True
     else:
         url = 'http://www.cs.txstate.edu/Personnel/' + input
         fileText = requests.get(url).text
@@ -31,8 +31,7 @@ if __name__ == '__main__':
         name = getName.group(1)
     except AttributeError:
         name = "Not Found"
-    print("\nName: \t\t\t" + name)
-    print()
+
 
     getEdu = re.search('Education</h3> </div> <div class="panel-body"><p>(.*?)</p>',searchableString)
 
@@ -41,8 +40,6 @@ if __name__ == '__main__':
     except AttributeError:
         edu = "Not Found"
 
-    print("Education: \t\t" + edu)
-    print()
 
     getRsch = re.search('Research Interests</h3> </div> <div class="panel-body"><p>(.*?)</p>',searchableString)
 
@@ -51,17 +48,15 @@ if __name__ == '__main__':
     except AttributeError:
         rsch = "Not Found"
 
-    print("Research Interests: \t" + rsch)
-    print()
 
-    getUID = re.search('profiles/(.*?)/\">Login',searchableString)
+    getUID = re.search('profiles/(.*?)/\">Login', searchableString)
 
     try:
-        UID = getUID.group(1)
+        outfilePrefix = UID = getUID.group(1)
+        UID = "Not Found" if name == "Not Found" else UID + "@txstate.edu"
     except AttributeError:
         UID = "Not Found"
-    print("Email: \t\t\t" + UID + "@txstate.edu")
-    print()
+
 
     getWebpage = re.search('</h2> <h3><a target=\"_blank\" href=\"(.*?)\">Homepage', searchableString)
 
@@ -69,11 +64,32 @@ if __name__ == '__main__':
         webpage = getWebpage.group(1)
     except AttributeError:
         webpage = "Not Found"
+
+    outfile = open(outfilePrefix + ".txt", "w+")
+
+
+    print("\nName: \t\t\t" + name)
+    print()
+    print("Education: \t\t" + edu)
+    print()
+    print("Research Interests: \t" + rsch)
+    print()
+    print("Email: \t\t\t" + UID)
+    print()
     print("Webpage: \t\t" + webpage)
     print()
 
+    outfile.write("\nName: \t\t\t" + name + "\n\n")
+    outfile.write("Education: \t\t" + edu + "\n\n")
+    outfile.write("Research Interests: \t" + rsch + "\n\n")
+    outfile.write("Email: \t\t\t" + UID + "\n\n")
+    outfile.write("Webpage: \t\t" + webpage + "\n\n")
+
+
+    outfile.close()
+
     if isHTMLFile:
-        file.close()
+        infile.close()
 
 
 
