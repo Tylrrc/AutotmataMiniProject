@@ -4,6 +4,13 @@ This program accepts either a *Computer Science Department faculty netID* or an 
 
 Some sample .html files are located in the */html* directory. The results of the query will be sent to the */results* directory.
 
+###*Note*:
+If you do not currently have the 're' or 'requests' modules needed to run this program, run 
+
+    setup.sh
+    
+Doing so will install pip, re, and requests modules.
+
 ###Walkthrough example:
 
 Running the following:
