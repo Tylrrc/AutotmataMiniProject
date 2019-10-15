@@ -1,30 +1,48 @@
-#Mini Programming Assignment (100 points)
-##Submission: 
-source code, a simple instruction on how to run your program, three example input files, three output files produced by your program on the three corresponding input files. Zip everything and submit to TRACS.
+# Automata Mini-Project
 
-##Note: 
-The purpose of this programming assignment is to practice regular expressions. Students who are very familiar with regular expressions and PHP/Perl/Python may skip this assignment, receiving an automatic 90 out of 100. However, you need to talk with me to get approval one week before it is due.
+This program accepts either a *Computer Science Department faculty netID* or an html file from https://cs.txstate.edu/accounts/profiles/*
 
-##FAQ: 
-I never used regular expressions, nor PHP/Perl/Python, how can I proceed?
+Some sample .html files are located in the */html* directory. The results of the query will be sent to the */results* directory.
 
-Answer: Learn by yourself. Use a couple of hours to read online tutorials, then go ahead with the assignment. I posted tutorial.ppt that I have used in the past. Part of it is useful for this assignment. If requested, we can arrange a time to go through it together. 
+###Walkthrough example:
 
-##Assignment requirement:
+Running the following:
 
-Input: Each input is a *.html file, which is a downloaded webpage for a faculty member listed on 
-http://www.cs.txstate.edu/Personnel/Faculty
+    python main.py
+         
+    
+will produce: 
+         
+     ****** CS Faculty Lookup ******
+    
+    Enter either: 
+    
+        - a CS Faculty netID, or
+    
+        - a path to a *.html file downloaded from http://www.cs.txstate.edu/Personnel/Faculty
+    
+    ---> 
 
-For example, 
-http://www.cs.txstate.edu/Personnel/jg66
+At the prompt, you may enter one of two things:
 
-Output: Each output is a *.txt file, which contains a tabular form similar to the following, with the requested information correctly extracted from the corresponding input file. Emails appear as images on the pages. However, you can easily figure out how to capture them.
+1) a netID
 
-Name: Ju (Byron) Gao
-Education: BS, PhD, Simon Fraser University
-Research interests: Data mining, databases, information retrieval
-Email: jg66@txstate.edu
-Webpage: http://cs.txstate.edu/~jg66
+        ---> jg66
 
-Program: use PHP, Perl or Python. Your program should be able to run on our department’s Linux machines.
+2) a .html file
+
+        ---> html/bg.html
+        
+The console and file output, in either case, will look something like this:
+
+    Name:                   Dr. Byron Gao
+    
+    Education:              BS, PhD, Simon Fraser University
+    
+    Research Interests:     Data mining, databases, information retrieval
+    
+    Email:                  jg66@txstate.edu
+    
+    Webpage:                http://cs.txstate.edu/~jg66
+    
 

@@ -1,6 +1,3 @@
-#TODO: Adjust search pattern for getName to exclude titles (Dr., Mr., etc...)
-#TODO: Try regex patterns with something other than lazy quantifier (YOU LAZY @#&$!)
-
 import re
 import requests
 
@@ -65,7 +62,7 @@ if __name__ == '__main__':
     except AttributeError:
         webpage = "Not Found"
 
-    outfile = open(outfilePrefix + ".txt", "w+")
+    outfile = open("results/" + outfilePrefix + ".txt", "w+")
 
 
     print("\nName: \t\t\t" + name)
